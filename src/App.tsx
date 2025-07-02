@@ -1,5 +1,5 @@
 import './App.css'
-import Collection from './components/collection'
+import Collection from './components/Collection'
 
 function App() {
   return (
