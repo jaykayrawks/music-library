@@ -15,21 +15,22 @@ type FilterOptions = {
   dispatch: React.Dispatch<{ type: string; payload: {key:string,value?: string} }>;
 };
 
-const Filters =({filters,appliedFilters,dispatch}:FilterOptions)=>{
+type Etype= React.ChangeEvent<HTMLSelectElement>; 
+const Filters =({filters,dispatch}:FilterOptions)=>{
 
   const {artists,albums} = filters;
   
-  const filterByArtist=(e)=>{
+  const filterByArtist=(e:Etype)=>{
     dispatch({type:'filter',payload:{key:'artist',value:e.target.value}});
     console.log(e.target.value)
   }
 
-  const filterByAlbum=(e)=>{
+  const filterByAlbum=(e:Etype)=>{
     dispatch({type:'filter',payload:{key:'album',value:e.target.value}});
     console.log(e.target.value)
   }
-  const sortBy =  (e)=> dispatch({type:ACTIONS.SORTBY,payload:{key:e.target.value}});
-  const groupBy = (e)=> dispatch({type:ACTIONS.GROUPBY,payload:{key:e.target.value}});
+  const sortBy =  (e:Etype)=> dispatch({type:ACTIONS.SORTBY,payload:{key:e.target.value}});
+  const groupBy = (e:Etype)=> dispatch({type:ACTIONS.GROUPBY,payload:{key:e.target.value}});
     return <div className='flex collection-filters'>
         
   

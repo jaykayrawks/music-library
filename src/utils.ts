@@ -1,4 +1,4 @@
- export function groupBy(data, key) {
+ export function groupBy(data, key:string) {
  
  return data.reduce((acc,song)=>{
          if(acc[song[key]]){
@@ -14,7 +14,10 @@
 export function sortBy(data, key:string) {
     const list={};
   Object.keys(data).forEach(v=>{
-        list[v] = data[v].sort((a,b)=>a[key].charCodeAt(0)-b[key].charCodeAt(0))
+        list[v] = data[v].sort(
+            (a,b)=>{
+                return a[key].localeCompare(b[key])
+  })
       },{});
       return list;
 }

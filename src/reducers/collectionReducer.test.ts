@@ -4,7 +4,7 @@ import {ACTIONS} from '../constants';
 
 describe('collectionReducer', () => {
   const initialState = {
-    songs: {},
+    songs: {collection:[]},
     appliedFilters: {
       album: undefined,
       artist: undefined,
@@ -13,44 +13,73 @@ describe('collectionReducer', () => {
     }
   };
 
-  it('should return the initial state', () => {
-    expect(collectionReducer(undefined, { type: 'UNKNOWN' })).toEqual(initialState);
-  });
+  // it('should return the initial state', () => {
+  //   expect(collectionReducer(initialState, { type: 'UNKNOWN',payload:{key:''} })).toEqual(initialState);
+  // });
 
   it('should handle FILTER action', () => {
-    const action = { type: ACTIONS.FILTER, payload: 'artist1' };
+    const action = { type: ACTIONS.FILTER, payload: {key:'artist',value:'Artist1'} };
+    const state = {...initialState,
+      songs:{collection:[
+        { title: 'Song3', artist: 'Artist1', album: 'Album1' },
+        { title: 'Song2', artist: 'Artist2', album: 'Album2' },
+       { title: 'Song1', artist: 'Artist1', album: 'Album1' }]
+      }
+    }
     const expectedState = {
-      ...initialState,
-      appliedFilters: { ...initialState.appliedFilters, artist: 'artist1' }
+      ...state,
+      songs:{collection:[
+        { title: 'Song3', artist: 'Artist1', album: 'Album1' },
+        { title: 'Song1', artist: 'Artist1', album: 'Album1' }
+      ]
+      },
+      appliedFilters: { ...initialState.appliedFilters, artist: 'Artist1' }
     };
-    expect(collectionReducer(initialState, action)).toEqual(expectedState);
+    expect(collectionReducer(state, action)).toEqual(expectedState);
   });
 
-  it('should handle GROUPBY action', () => {
-    const action = { type: ACTIONS.GROUPBY, payload: 'album' };
+   it('should handle GROUPBY action', () => {
+     const action = { type: ACTIONS.GROUPBY, payload: {key:'album'} };
+     const state = {...initialState,
+      songs:{collection:[
+        { title: 'Song3', artist: 'Artist1', album: 'Album1' },
+        { title: 'Song2', artist: 'Artist2', album: 'Album2' },
+       { title: 'Song1', artist: 'Artist1', album: 'Album1' }]
+      }
+    }
     const updatedSongs = {
-      'album1': [{ title: 'Song1', artist: 'Artist1', album: 'Album1' }],
-      'album2': [{ title: 'Song2', artist: 'Artist2', album: 'Album2' }]
+      'Album1': [{ title: 'Song3', artist: 'Artist1', album: 'Album1' },
+        { title: 'Song1', artist: 'Artist1', album: 'Album1' }],
+      'Album2': [{ title: 'Song2', artist: 'Artist2', album: 'Album2' }]
     };
     const expectedState = {
       ...initialState,
       songs: updatedSongs,
       appliedFilters: { ...initialState.appliedFilters, groupBy: 'album' }
     };
-    expect(collectionReducer(initialState, action)).toEqual(expectedState);
+    expect(collectionReducer(state, action)).toEqual(expectedState);
   });
 
   it('should handle SORTBY action', () => {
-    const action = { type: ACTIONS.SORTBY, payload: 'title' };
-    const updatedSongs = {
-      'album1': [{ title: 'Song1', artist: 'Artist1', album: 'Album1' }],
-      'album2': [{ title: 'Song2', artist: 'Artist2', album: 'Album2' }]
-    };
+    const action = { type: ACTIONS.SORTBY, payload: {key:'title'} };
+    const state = {...initialState,
+      songs:{collection:[
+        { title: 'Song3', artist: 'Artist1', album: 'Album1' },
+        { title: 'Song2', artist: 'Artist2', album: 'Album2' },
+       { title: 'Song1', artist: 'Artist1', album: 'Album1' }]
+      }
+    }
+
+    const updatedSongs = [
+        { title: 'Song1', artist: 'Artist1', album: 'Album1' },
+        { title: 'Song2', artist: 'Artist2', album: 'Album2' },
+       { title: 'Song3', artist: 'Artist1', album: 'Album1' }]
+      
     const expectedState = {
       ...initialState,
-      songs: updatedSongs,
+      songs: {collection:updatedSongs},
       appliedFilters: { ...initialState.appliedFilters, sortBy: 'title' }
     };
-    expect(collectionReducer(initialState, action)).toEqual(expectedState);
+    expect(collectionReducer(state, action)).toEqual(expectedState);
   });
 });

@@ -12,23 +12,28 @@ const collectionReducer = function(state,action:Action){
   const {type,payload} = action;
   const {key,value}=payload; 
   let updatedList ={};
-  
+  let sdata = state.songs.collection;
+      
   switch(type){
     case ACTIONS.FILTER:
-      if(payload){
-        updatedList = {collection:data.collection.filter(song=>song[key]===value)};
+    if(state.appliedFilters.groupBy){
+      sdata = data.collection;
+    }  
+    if(payload){
+        updatedList = {collection:sdata.filter(song=>song[key]===value)};
       }
-      currState={...state,songs:updatedList,appliedFilters:{...state.appliedFilters,filter:payload}}
+      currState={...state,songs:updatedList,appliedFilters:{...state.appliedFilters,[key]:value}}
       
       break;
     case ACTIONS.GROUPBY:
-      
-      updatedList = groupBy(data.collection,key);
+      if(state.appliedFilters.groupBy){
+        sdata = data.collection;
+      }
+      updatedList = groupBy(sdata,key);
       currState ={...state,songs:updatedList,appliedFilters:{...state.appliedFilters,groupBy:key}}
       break;
      case ACTIONS.SORTBY:
       updatedList = sortBy(state.songs,key);
-      
       currState ={...state,songs:updatedList,appliedFilters:{...state.appliedFilters,sortBy:key}}
       break;    
   }

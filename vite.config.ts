@@ -11,7 +11,7 @@ export default defineConfig({
       manifest: true,
       filename: 'remoteEntry.js',
       exposes: {
-        './collection': './src/components/Collection',
+        './collection': './src/modules/collection',
       },
       shared: {
         react: {
@@ -23,6 +23,11 @@ export default defineConfig({
       jsAssetsFilterFunction: (outputChunk) => outputChunk.fileName === 'remoteEntry.js'
     })
     ],
+      test: {
+    globals: true,
+    environment: "jsdom",
+    // reporters: ['html'],
+  },
     build: {
     target: 'chrome89',
   },

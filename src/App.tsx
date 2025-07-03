@@ -1,19 +1,8 @@
-import { useEffect, useLayoutEffect } from 'react'
-import Collection from './components/Collection'
-import data from './data/data.json';
+import Collection from './modules/collection/Collection'
 
 function App() {
 // set songs collection into localStorage
-  useLayoutEffect(()=>{
-    if(!localStorage.getItem('songs')){
-      localStorage.setItem('songs',data);
-    }
-  },[]);
-  return (
-    <>
-      <Collection />
-    </>
-  )
+  return <Collection canEdit={false} />
 }
 
 export default App
