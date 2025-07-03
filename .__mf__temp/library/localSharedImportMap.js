@@ -4,7 +4,7 @@
     const importMap = {
       
         "react": async () => {
-          let pkg = await import("__mf__virtual/library__prebuild__react__prebuild__")
+          let pkg = await import("__mf__virtual/library__prebuild__react__prebuild__.js")
           return pkg
         }
       

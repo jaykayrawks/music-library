@@ -1,0 +1,32 @@
+.flex{
+  display: flex;
+  gap:10px;
+}
+.flex span{
+  flex:1 1 300px;
+}
+.flex-column{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+.collection-header{
+    padding:20px;
+    box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.2);
+}
+.song{
+  border-bottom: 1px solid black;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+.gap30{
+    gap:30px;
+}
+.song:last-child{
+  border-bottom: 0px;
+}
+
+
+.yay{
+  border:1px solid black;
+}
